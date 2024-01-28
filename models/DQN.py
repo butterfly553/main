@@ -247,4 +247,4 @@ class MultiAgent():
                 good += 1
             else:
                 bad += 1
-        print(f"%dqn Routed: {good / float(good + bad)} {good} {bad}")
+        print(f"%dqn Routed:rate {good / float(good + bad)} good {good} bad {bad}")
