@@ -51,7 +51,7 @@ class Env(gym.Env):
         self.latency_reward = 0
         self.bandwidth_reward = 0
 
-        f = open(self.save_file, "w+")
+        f = open(self.save_file_gcn.csv, "w+")
         f.write("steps,reward,latency,bandwidth\n")
         f.close()
 
