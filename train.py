@@ -58,7 +58,7 @@ def gcn():
     num_nodes = 50
     max_neighbors = 50
 
-    environment = Env("training_data/save_file",
+    environment = Env("training_data/save_file_gcn.csv",
                       num_nodes_in_graph=num_nodes, 
                       max_neighbors=max_neighbors,
                       graph = G )
