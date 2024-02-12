@@ -101,15 +101,15 @@ def cached_method(graph, source, target):
 def compute_reward(graph: nx.Graph, target: int, path: list) -> Tuple[list, bool]:
     c2 = cached_method(graph, path[-2], target)
     if path[-1] == target:
-        # best_path_length = nx.astar_path_length(graph, path[0], target)
+        best_path_length = nx.astar_path_length(graph, path[0], target)
         actual_path_length = compute_path_length(graph, tuple(path))
-        # latency_reward = best_path_length / actual_path_length
-        # best_flow_value = compute_best_flow(graph, path[0], target)
+        latency_reward = best_path_length / actual_path_length
+        best_flow_value = compute_best_flow(graph, path[0], target)
         actual_flow_value = compute_flow_value(graph, tuple(path))
-        # flow_reward = actual_flow_value / best_flow_value
+        flow_reward = actual_flow_value / best_flow_value
         if c2 == compute_path_length(graph, path[-2:]):
-            return [1.01, actual_path_length, actual_flow_value], True
-        return [-1.51, actual_path_length, actual_flow_value], True
+            return [1.01, latency_reward, flow_reward], True
+        return [-1.51, latency_reward, flow_reward], True
     if len(path) > 10 * len(list(graph.nodes)):
 
         c1 = cached_method(graph, path[-1], target)
