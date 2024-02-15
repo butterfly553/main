@@ -109,6 +109,8 @@ def compute_reward(graph: nx.Graph, target: int, path: list) -> Tuple[list, bool
         flow_reward = actual_flow_value / best_flow_value
         if c2 == compute_path_length(graph, path[-2:]):
             return [1.01, latency_reward, flow_reward], True
+        if best_flow_value <= 0.001:
+            return [-1, 0, 0], False
         return [-1.51, latency_reward, flow_reward], True
     if len(path) > 10 * len(list(graph.nodes)):
 
