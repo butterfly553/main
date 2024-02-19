@@ -46,13 +46,14 @@ class Env(gym.Env):
         self.path: list = []
         self.neighbors = []
         self.eps = 0
+        self.success=0
 
         self.episode_reward = 0
         self.latency_reward = 0
         self.bandwidth_reward = 0
 
         f = open(self.save_file, "w+")
-        f.write("steps,reward,latency,bandwidth\n")
+        f.write("steps,reward,latency,bandwidth,diubao\n")
         f.close()
 
 #         f = open("training_data/step_data.csv", "w+")
@@ -108,8 +109,9 @@ class Env(gym.Env):
         return src_tgt_mat
 
     def record_data(self, rewards, done):
+        self.eps += 1
         if done:
-            self.eps += 1
+            self.success += 1
             self.latency_record.append(rewards[1])
 
             with open(self.save_file, 'a') as fd:
@@ -117,6 +119,7 @@ class Env(gym.Env):
                 fd.write(',' + str(round(self.episode_reward, ndigits=3)))
                 fd.write(',' + str(round(rewards[1], ndigits=3)))
                 fd.write(',' + str(round(rewards[2], ndigits=8)))
+                fd.write(',' + str(round(self.success/self.eps, ndigits=8)))
                 fd.write('\n')
                 fd.close()
 
