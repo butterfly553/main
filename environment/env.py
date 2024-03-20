@@ -49,7 +49,7 @@ class Env(gym.Env):
         self.bandwidth_reward = 0
 
         f = open(self.save_file, "w+")
-        f.write("steps,reward,latency,bandwidth,diubao\n")
+        f.write("steps,reward,latency,bandwidth,suc,zong\n")
         f.close()
 
         f = open("training_data/step_data.csv", "w+")
