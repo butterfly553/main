@@ -119,7 +119,8 @@ class Env(gym.Env):
                 fd.write(',' + str(round(self.episode_reward, ndigits=3)))
                 fd.write(',' + str(round(rewards[1], ndigits=3)))
                 fd.write(',' + str(round(rewards[2], ndigits=8)))
-                fd.write(',' + str(round(self.success/self.eps, ndigits=8)))
+                fd.write(',' + str(round(self.success, ndigits=8)))
+                fd.write(',' + str(round(self.eps, ndigits=8)))
                 fd.write('\n')
                 fd.close()
 
