@@ -25,14 +25,22 @@ class GCN(nn.Module):
         # graph
         conv1_out = num_nodes//3
         conv2_out = num_nodes//2
-
+        encoder_layer = nn.TransformerEncoderLayer(
+            d_model=50,
+            nhead=10,
+            dim_feedforward=4 * 50,
+            batch_first=True,
+            dropout=0.1,
+            device='cpu'
+        )
+        self.encoder = torch.nn.TransformerEncoder(encoder_layer, num_layers=1)
         # num_nodes = 5
         self.conv1 = GATConv(3, conv1_out, edge_dim=1)
         self.conv2 = GATConv(conv1_out, conv2_out, edge_dim=1)
 
         self.x1 = nn.Linear(num_nodes*conv2_out, num_nodes)
         self.x2 = nn.Linear(num_nodes, out)
-
+    
         self.num_nodes = num_nodes
 
     def my_sigmoid(self, tensor):
@@ -55,7 +63,7 @@ class GCN(nn.Module):
         x = self.x1(conv_out)
         x = torch.selu(x)
         x = self.x2(x)
-
+        x = self.encoder(x)
         x[~mask] = float('-inf')
 
         return x
