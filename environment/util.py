@@ -118,6 +118,7 @@ def compute_reward(graph: nx.Graph, target: int, path: list) -> Tuple[list, bool
         latency_reward = best_path_length / actual_path_length
         best_flow_value = compute_best_flow(graph, path[0], target)
         actual_flow_value = compute_flow_value(graph, tuple(path))
+        flow_reward = actual_flow_value / best_flow_value
         c1 = cached_method(graph, path[-1], target)
         if c1 < c2:
             return  [latency_reward-flow_reward, latency_reward, flow_reward], True
